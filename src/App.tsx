@@ -17,6 +17,7 @@ import {
   Volume2,
   VolumeX,
   Sparkles,
+  MessageCircle,
 } from "lucide-react";
 
 // FlipCard Component with 3D Tilt Effect + Premium Mobile Tap Hint
@@ -201,7 +202,7 @@ function RealisticPetal({ size = 20, className = "" }: { size?: number; classNam
 }
 
 function Countdown() {
-  const targetDate = new Date("2027-01-04T18:00:00").getTime();
+  const targetDate = new Date("2027-01-02T19:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -233,33 +234,39 @@ function Countdown() {
   const items = [
     { label: "Days", value: timeLeft.days },
     { label: "Hours", value: timeLeft.hours },
-    { label: "Mins", value: timeLeft.minutes },
-    { label: "Secs", value: timeLeft.seconds },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
   ];
 
   return (
-    <div className="flex justify-center gap-2 sm:gap-4 md:gap-8 py-8 md:py-12 px-2">
+    <div className="flex justify-center gap-2 sm:gap-6 md:gap-12 py-10 md:py-16 px-1">
       {items.map((item, idx) => (
         <motion.div
           key={item.label}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.1 }}
+          transition={{ delay: idx * 0.12, duration: 0.8 }}
           viewport={{ once: true }}
-          className="flex flex-col items-center min-w-[65px] sm:min-w-[75px] md:min-w-[120px]"
+          className="flex flex-col items-center"
         >
-          <div className="relative group">
-            <div className="absolute -inset-3 bg-sage/15 rounded-[2rem] blur-xl group-hover:bg-sage/25 transition-all duration-700" />
-            <div className="relative bg-white/60 backdrop-blur-xl border border-white/80 rounded-xl md:rounded-[1.5rem] p-2 sm:p-4 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] min-w-[60px] sm:min-w-[70px] md:min-w-[100px] text-center overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sage/30 to-transparent" />
-              <span className="serif text-4xl sm:text-5xl md:text-7xl font-bold text-umber tabular-nums drop-shadow-sm">
-                {String(item.value).padStart(2, "0")}
+          {/* Arch Container */}
+          <div className="relative w-[82px] sm:w-[95px] md:w-[145px] aspect-[2/3] bg-white rounded-t-full rounded-b-[2rem] shadow-[0_15px_45px_-10px_rgba(0,0,0,0.08)] flex flex-col items-center justify-center border border-umber/5 overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-b from-umber/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+            <span className="serif text-4xl sm:text-5xl md:text-7xl font-bold text-umber/90 tabular-nums drop-shadow-sm mt-[-10px] md:mt-[-20px]">
+              {String(item.value).padStart(2, "0")}
+            </span>
+
+            <div className="mt-4 md:mt-8 px-3 md:px-5 py-1.5 md:py-2.5 bg-paper/60 backdrop-blur-sm rounded-full border border-umber/10 shadow-sm">
+              <span className="text-[8px] md:text-[10px] uppercase tracking-[0.25em] font-bold text-umber/50">
+                {item.label}
               </span>
             </div>
+
+            <div className="absolute bottom-4 text-umber/20 group-hover:text-umber/40 transition-colors">
+              <Sparkles size={12} className="md:w-4 md:h-4" />
+            </div>
           </div>
-          <span className="mt-4 text-[11px] md:text-sm uppercase tracking-[0.3em] font-bold text-umber/80">
-            {item.label}
-          </span>
         </motion.div>
       ))}
     </div>
@@ -492,6 +499,94 @@ function RSVPForm() {
   );
 }
 
+function WishesForm() {
+  const [name, setName] = useState("");
+  const [wish, setWish] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const endpoint = import.meta.env.VITE_RSVP_ENDPOINT;
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !wish.trim()) return;
+
+    setSubmitting(true);
+    const payload = {
+      type: "wish",
+      name: name.trim(),
+      wish: wish.trim(),
+      submittedAt: new Date().toISOString(),
+    };
+
+    try {
+      if (endpoint) {
+        await fetch(endpoint, {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify(payload),
+        });
+      }
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="w-16 h-16 rounded-full bg-sage/10 flex items-center justify-center"
+        >
+          <Sparkles className="text-sage" size={32} />
+        </motion.div>
+        <h4 className="serif text-2xl text-umber font-bold">Thank You!</h4>
+        <p className="text-sm text-umber/80 leading-relaxed">
+          Your warm wishes have been received and mean the world to us.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div data-no-flip className="w-full h-full flex flex-col p-4 md:p-6 cursor-auto">
+      <h4 className="serif text-3xl text-umber font-bold mb-4 text-center">Send a Wish</h4>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          data-no-flip
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full rounded-xl border border-sage/20 bg-white/60 px-4 py-3 text-xs md:text-sm outline-none focus:border-sage/40 transition-colors"
+          required
+        />
+        <textarea
+          data-no-flip
+          placeholder="Your beautiful message..."
+          value={wish}
+          onChange={(e) => setWish(e.target.value)}
+          rows={4}
+          className="w-full rounded-xl border border-sage/20 bg-white/60 px-4 py-3 text-xs md:text-sm outline-none focus:border-sage/40 transition-colors resize-none"
+          required
+        />
+        <button
+          type="submit"
+          data-no-flip
+          disabled={submitting || !name || !wish}
+          className="w-full bg-umber text-white py-3 rounded-xl text-[12px] md:text-sm uppercase tracking-widest font-bold disabled:opacity-50 transition-all hover:bg-umber/90 shadow-lg"
+        >
+          {submitting ? "Sending..." : "Send Wish"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export default function App() {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
@@ -603,10 +698,10 @@ export default function App() {
               className="absolute top-12 md:top-24 left-0 right-0 text-center z-10 pointer-events-none"
             >
               <h1 className="serif text-4xl md:text-6xl text-umber font-bold md:font-light tracking-[0.2em] drop-shadow-md">
-                Tharushi & Kalana
+                Sandaru & Rishini
               </h1>
               <p className="mt-3 text-xs md:text-sm uppercase tracking-[0.6em] text-umber/80 font-bold drop-shadow-sm">
-                04 January 2027
+                02 January 2027
               </p>
             </motion.div>
 
@@ -856,13 +951,13 @@ export default function App() {
         initial={false}
         animate={isOpened ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
         transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-        className="max-w-[1600px] mx-auto px-4 py-10 sm:py-12 md:px-12 md:py-24 flex flex-col gap-10 md:gap-16 relative z-10 min-h-screen"
+        className="max-w-[1600px] mx-auto px-4 pt-2 md:pt-4 pb-10 md:pb-24 flex flex-col gap-6 md:gap-16 relative z-10 min-h-screen"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isOpened ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
           transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
-          className="text-center space-y-4 md:space-y-8 mt-4 md:mt-12"
+          className="text-center space-y-4 md:space-y-8 mt-12 md:mt-24"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -888,7 +983,7 @@ export default function App() {
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-32 bg-umber/5 blur-3xl rounded-full" />
 
             <motion.h2 whileHover={{ scale: 1.05 }} className="script text-[13vw] sm:text-6xl md:text-9xl text-umber font-bold drop-shadow-lg relative z-10 leading-none">
-              Tharushi
+              Sandaru
             </motion.h2>
 
             <div className="relative flex items-center justify-center shrink-0">
@@ -905,7 +1000,7 @@ export default function App() {
             </div>
 
             <motion.h2 whileHover={{ scale: 1.05 }} className="script text-[13vw] sm:text-6xl md:text-9xl text-umber font-bold drop-shadow-lg relative z-10 leading-none">
-              Kalana
+              Rishini
             </motion.h2>
           </div>
 
@@ -1084,37 +1179,20 @@ export default function App() {
 
 
 
-                    {/* hosting families */}
-                    <div className="space-y-0.5">
-                      <p className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-medium">
-                        Loving Son of
-                      </p>
-                      <p className="serif text-[10px] sm:text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-umber font-bold md:font-normal leading-relaxed">
-                        MR. SUNIL PERERA & MRS. LILANI PERERA
-                      </p>
-                      <p className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-medium">
-                        &
-                      </p>
-                      <p className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-medium">
-                        Loving Daughter of
-                      </p>
-                      <p className="serif text-[10px] sm:text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-umber font-bold md:font-normal leading-relaxed">
-                        MR. DAYAN SILVA & MRS. KUSUMA SILVA
-                      </p>
-                    </div>
+
 
                     <p className="serif mb-2.5 sm:mb-0 text-[11px] sm:text-[12px] md:text-[14px] uppercase tracking-[0.2em] text-taupe/80 font-bold md:font-normal leading-relaxed max-w-[220px] md:max-w-xs">
-                      REQUEST THE PLEASURE OF YOUR COMPANY TO CELEBRATE THE MARRIAGE OF THEIR CHILDREN
+                      WE INVITE YOU TO CELEBRATE OUR WEDDING
                     </p>
 
                     {/* couple names */}
                     <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 max-w-full px-2">
                       <span className="script text-[32px] sm:text-[38px] md:text-[48px] font-bold md:font-normal text-sage drop-shadow-sm leading-[1.1]">
-                        Tharushi
+                        Sandaru
                       </span>
                       <span className="text-taupe/50 text-sm md:text-xl font-serif">&amp;</span>
                       <span className="script text-[32px] sm:text-[38px] md:text-[48px] font-bold md:font-normal text-sage drop-shadow-sm leading-[1.1]">
-                        Kalana
+                        Rishini
                       </span>
                     </div>
 
@@ -1123,16 +1201,16 @@ export default function App() {
                       <div className="h-px flex-1 bg-sand/45" />
                       <div className="flex flex-col items-center gap-0.5">
                         <span className="serif text-[28px] sm:text-[32px] md:text-4xl text-umber font-bold md:font-medium leading-none">
-                          04
+                          02
                         </span>
                         <span className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-taupe font-bold">
-                          JANUARY · MONDAY
+                          JANUARY · SATURDAY
                         </span>
                         <span className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-bold">
-                          6:00 PM · 2027
+                          7:00 PM · 2027
                         </span>
                         <span className="serif mt-1 block max-w-[220px] px-2 text-[11px] sm:text-[12px] md:text-[13px] uppercase tracking-[0.12em] text-umber/75 text-center leading-snug break-words font-bold md:font-medium">
-                          EARL'S REGENT HOTEL, KANDY
+                          THE MAZE GLASS HOUSE
                         </span>
                       </div>
                       <div className="h-px flex-1 bg-sand/45" />
@@ -1192,6 +1270,7 @@ export default function App() {
           )}
         </div>
 
+
         {/* Bento Grid Layout - Flipped Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-10 relative">
           <motion.div
@@ -1214,9 +1293,9 @@ export default function App() {
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <p className="text-[11px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-black mb-1 md:mb-2">Monday</p>
+                    <p className="text-[11px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-black mb-1 md:mb-2">Saturday</p>
                     <div className="relative inline-block px-6 md:px-8 py-1 md:py-2 border-y border-umber/30">
-                      <p className="serif text-6xl md:text-9xl font-bold text-umber leading-none">04</p>
+                      <p className="serif text-6xl md:text-9xl font-bold text-umber leading-none">02</p>
                       <motion.div
                         animate={{ opacity: [0.4, 1, 0.4] }}
                         transition={{ repeat: Infinity, duration: 2 }}
@@ -1285,7 +1364,7 @@ export default function App() {
               front={
                 <div className="w-full h-full relative group">
                   <img
-                    src="https://lh3.googleusercontent.com/p/AF1QipMCWi33oLWbWeROAfP8kUpqwg83FGz9PodQ-lF4=w574-h384-n-k-rw-no-v1"
+                    src="/Ballroom-2-768x512.jpg"
                     alt="Earl's Regent Hotel"
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     referrerPolicy="no-referrer"
@@ -1297,16 +1376,16 @@ export default function App() {
                       The Location
                     </p>
                     <h3 className="serif text-2xl md:text-5xl text-sage leading-tight drop-shadow-sm font-medium">
-                      Earl's Regent
+                      The Maze
                       <br />
-                      Hotel, Kandy
+                      Glass House
                     </h3>
 
                     <motion.button
                       data-no-flip
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => window.open("https://maps.app.goo.gl/Bb5k8Gs9iEVmN8126", "_blank")}
+                      onClick={() => window.open("https://maps.app.goo.gl/ZVkwHrQe8smsWQrD7", "_blank")}
                       className="mt-3 md:mt-5 px-5 py-2 md:px-7 md:py-3 bg-sage text-white rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors"
                     >
                       View Map
@@ -1315,23 +1394,21 @@ export default function App() {
 
                   <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-sage flex items-center gap-3 bg-white/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 shadow-lg">
                     <MapPin className="text-sage animate-bounce" size={16} />
-                    <p className="serif text-[10px] md:text-sm tracking-[0.2em] font-bold uppercase">Earl's Regent Hotel Kandy</p>
+                    <p className="serif text-[10px] md:text-sm tracking-[0.2em] font-bold uppercase">The Maze Glass House</p>
                   </div>
                 </div>
               }
               back={
                 <>
                   <MapPin size={24} className="text-sage mb-4 md:mb-6 opacity-70 md:w-9 md:h-9" />
-                  <h4 className="serif text-2xl md:text-4xl text-sage mb-2 md:mb-4">Earl's Regent Hotel Kandy</h4>
+                  <h4 className="serif text-2xl md:text-4xl text-sage mb-2 md:mb-4">The Maze Glass House</h4>
                   <p className="text-[10px] md:text-sm text-zinc-500 uppercase tracking-widest leading-loose mb-4 md:mb-6">
-                    Earl's Regent Hotel,
-                    <br />
-                    Kandy
+                    The Maze Glass House
                   </p>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => window.open("https://maps.app.goo.gl/Bb5k8Gs9iEVmN8126", "_blank")}
+                    onClick={() => window.open("https://maps.app.goo.gl/ZVkwHrQe8smsWQrD7", "_blank")}
                     className="px-6 py-2 md:px-8 md:py-3 bg-sage text-white rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors"
                   >
                     View Map
@@ -1385,12 +1462,12 @@ export default function App() {
 
                   <div className="w-full max-w-sm space-y-4 md:space-y-6 text-left">
                     <div className="flex items-start gap-2 md:gap-4">
-                      <span className="serif text-sage font-bold text-[10px] md:text-base w-12 md:w-20 text-right shrink-0 pt-1">6:00 PM</span>
+                      <span className="serif text-sage font-bold text-[10px] md:text-base w-12 md:w-20 text-right shrink-0 pt-1">7:00 PM</span>
                       <div className="w-px h-full bg-sage/30 relative mt-2 -ml-[1px] md:-ml-2 shrink-0">
                         <div className="absolute top-0 -left-[3px] w-2 h-2 rounded-full bg-sage" />
                       </div>
                       <div>
-                        <p className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Poruwa Ceremony</p>
+                        <p className="text-[10px] md:text-xs font-bold uppercase tracking-wider">Wedding Ceremony</p>
                         <p className="serif text-[10px] md:text-xs italic text-zinc-500">Followed by Reception</p>
                       </div>
                     </div>
@@ -1401,42 +1478,141 @@ export default function App() {
           </motion.div>
         </div>
 
-        <div className="w-full max-w-4xl mx-auto px-4 mt-8 md:mt-16">
-          <div className="text-center mb-6 md:mb-10">
-            <p className="text-[12px] md:text-sm uppercase tracking-[0.6em] text-umber/80 font-bold mb-2">Countdown to our day</p>
-            <div className="h-px w-12 bg-umber/20 mx-auto" />
+        {/* Wishes Section */}
+        <div className="w-full max-w-4xl mx-auto px-4 mt-10 md:mt-20 mb-4">
+
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mx-auto"
+          >
+            <FlipCard
+              containerClassName="w-full h-[400px] md:h-[450px]"
+              front={
+                <div className="w-full h-full bg-white flex flex-col items-center justify-center text-center p-8 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-sage/5 via-transparent to-umber/5" />
+                  <div className="relative z-10 space-y-6">
+                    <motion.div
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <MessageCircle size={48} className="text-sage mx-auto opacity-70" />
+                    </motion.div>
+                    <div className="space-y-2">
+                      <h3 className="serif text-3xl md:text-4xl text-umber font-bold">Best Wishes</h3>
+                      <p className="text-sm text-taupe font-medium tracking-wide uppercase">Share your love & blessings</p>
+                    </div>
+                    <div className="pt-4">
+                      <span className="inline-block px-8 py-3 rounded-full border border-sage/20 text-sage text-xs font-black uppercase tracking-widest group-hover:bg-sage group-hover:text-white transition-all duration-500">
+                        Tap to Write
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              }
+              back={<WishesForm />}
+            />
+          </motion.div>
+        </div>
+
+        <div className="w-full max-w-5xl mx-auto px-4 mt-4 md:mt-8 mb-4">
+          <div className="text-center mb-12 md:mb-16 space-y-6">
+            <div className="flex items-center justify-center gap-4 text-umber/20">
+              <div className="h-px w-8 md:w-16 bg-current" />
+              <Sparkles size={16} />
+              <div className="h-px w-8 md:w-16 bg-current" />
+            </div>
+
+            <div className="space-y-1">
+              <h2 className="serif text-3xl md:text-5xl lg:text-6xl text-umber tracking-[0.2em] font-bold">WAIT FOR THE</h2>
+              <h2 className="script text-5xl md:text-8xl lg:text-[7rem] text-umber/80 leading-none">magic</h2>
+            </div>
+
+            <div className="inline-flex items-center gap-4 px-8 py-3 rounded-full border border-umber/10 bg-white/40 backdrop-blur-md shadow-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-umber/30" />
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.5em] font-black text-umber/70">Counting Down</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-umber/30" />
+            </div>
           </div>
           <Countdown />
         </div>
 
         {/* Premium Moments Gallery */}
-        <div className="w-full max-w-5xl mx-auto px-4 mt-16 md:mt-24 mb-4 md:mb-12">
+        <div className="w-full max-w-5xl mx-auto px-4 mt-4 md:mt-8 mb-4 md:mb-12">
           <div className="text-center mb-8 md:mb-16">
             <p className="text-[12px] md:text-sm uppercase tracking-[0.6em] text-umber/80 font-bold mb-2">Moments</p>
             <div className="h-px w-12 bg-umber/20 mx-auto" />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 px-2 md:px-0">
-            {[12, 13, 14, 15].map((num, idx) => (
+          {/* Customized Moments Layout */}
+          <div className="relative w-full flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-24 mt-4 mb-16">
+            {/* Left Side: Images */}
+            <div className="relative w-[280px] md:w-[400px] aspect-[3/4] flex-shrink-0 mb-12 md:mb-0">
               <motion.div
-                key={num}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                className={`relative group overflow-hidden rounded-[1.5rem] md:rounded-[2rem] shadow-xl border-[3px] border-white/80 aspect-[3/4] md:aspect-[4/5] ${idx % 2 === 1 ? "mt-8 md:mt-12" : "mb-8 md:mb-12"
-                  }`}
+                transition={{ duration: 1 }}
+                className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white group"
               >
                 <img
-                  src={`/tem/${num}.jpg`}
-                  alt={`Moment ${num}`}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  alt="Sandaru & Rishini"
                   loading="lazy"
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                  src="/images/3.jpeg"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-umber/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </motion.div>
-            ))}
+
+              {/* Overlapping Smaller Image */}
+              <motion.div
+                initial={{ opacity: 0, rotate: 0 }}
+                whileInView={{ opacity: 1, rotate: -8 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="absolute -bottom-12 -left-10 md:-bottom-10 md:-left-12 w-[60%] aspect-[4/5] bg-white p-2 rounded-xl shadow-2xl z-20 border border-umber/30"
+              >
+                <img
+                  alt="The Couple"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg"
+                  src="/images/2.jpeg"
+                />
+                <div className="absolute -top-3 -right-3 text-umber animate-pulse">
+                  <Sparkles size={20} />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Side: Text */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="flex flex-col items-center md:items-start text-center md:text-left space-y-2 md:space-y-6 z-20 w-full"
+            >
+              <div className="w-full flex justify-center md:justify-start">
+                <h3 className="script text-[4.5rem] sm:text-7xl md:text-[8rem] lg:text-[10rem] text-umber leading-none drop-shadow-sm px-2 pt-8 pb-2">
+                  Sandaru
+                </h3>
+              </div>
+
+              <div className="flex items-center gap-4 w-full justify-center md:justify-start px-4 md:pl-6">
+                <div className="h-[0.5px] flex-1 max-w-[40px] bg-umber/40"></div>
+                <span className="serif text-2xl md:text-6xl text-taupe/60 italic font-light">&amp;</span>
+                <div className="h-[0.5px] flex-1 max-w-[40px] bg-umber/40"></div>
+              </div>
+
+              <div className="w-full flex justify-center md:justify-start overflow-hidden">
+                <h3 className="script text-[4.5rem] sm:text-7xl md:text-[8rem] lg:text-[10rem] text-umber leading-none drop-shadow-sm px-2 pt-2">
+                  Rishini
+                </h3>
+              </div>
+
+
+            </motion.div>
           </div>
+
         </div>
 
         <motion.footer
