@@ -201,7 +201,7 @@ function RealisticPetal({ size = 20, className = "" }: { size?: number; classNam
 }
 
 function Countdown() {
-  const targetDate = new Date("2026-06-18T18:00:00").getTime();
+  const targetDate = new Date("2027-01-04T18:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -381,7 +381,7 @@ function RSVPForm() {
       <p className="text-[12px] md:text-sm text-umber/80 font-bold uppercase tracking-widest mb-4 md:mb-6 text-center leading-relaxed">
         Please let us know by
         <br />
-        04.06.2026
+        25.12.2026
       </p>
 
       <form onSubmit={submit} className="space-y-4 md:space-y-4 px-1 md:px-2">
@@ -593,7 +593,7 @@ export default function App() {
             className="fixed inset-0 z-[100] flex items-center justify-center p-6 overflow-hidden"
           >
             <div className="absolute inset-0 z-0 pointer-events-none">
-              <img src="/1.webp" alt="First Page Background" className="w-full h-full object-cover" fetchpriority="high" decoding="sync" />
+              <img src="/tem/12.jpg" alt="First Page Background" className="w-full h-full object-cover" fetchpriority="high" decoding="sync" />
             </div>
 
             <motion.div
@@ -603,10 +603,10 @@ export default function App() {
               className="absolute top-12 md:top-24 left-0 right-0 text-center z-10 pointer-events-none"
             >
               <h1 className="serif text-4xl md:text-6xl text-umber font-bold md:font-light tracking-[0.2em] drop-shadow-md">
-                Mahela & Himesha
+                Tharushi & Kalana
               </h1>
               <p className="mt-3 text-xs md:text-sm uppercase tracking-[0.6em] text-umber/80 font-bold drop-shadow-sm">
-                18 June 2026
+                04 January 2027
               </p>
             </motion.div>
 
@@ -888,7 +888,7 @@ export default function App() {
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-32 bg-umber/5 blur-3xl rounded-full" />
 
             <motion.h2 whileHover={{ scale: 1.05 }} className="script text-[13vw] sm:text-6xl md:text-9xl text-umber font-bold drop-shadow-lg relative z-10 leading-none">
-              Mahela
+              Tharushi
             </motion.h2>
 
             <div className="relative flex items-center justify-center shrink-0">
@@ -905,7 +905,7 @@ export default function App() {
             </div>
 
             <motion.h2 whileHover={{ scale: 1.05 }} className="script text-[13vw] sm:text-6xl md:text-9xl text-umber font-bold drop-shadow-lg relative z-10 leading-none">
-              Himesha
+              Kalana
             </motion.h2>
           </div>
 
@@ -1090,7 +1090,7 @@ export default function App() {
                         Loving Son of
                       </p>
                       <p className="serif text-[10px] sm:text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-umber font-bold md:font-normal leading-relaxed">
-                        MR. A.C.K.P. KULARATNE & MRS. J.A.C.P. JAYAKODY
+                        MR. SUNIL PERERA & MRS. LILANI PERERA
                       </p>
                       <p className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-medium">
                         &
@@ -1099,7 +1099,7 @@ export default function App() {
                         Loving Daughter of
                       </p>
                       <p className="serif text-[10px] sm:text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-umber font-bold md:font-normal leading-relaxed">
-                        MR. M. WEERASINGHE & LATE MRS. T.M.M. THENNAKOON
+                        MR. DAYAN SILVA & MRS. KUSUMA SILVA
                       </p>
                     </div>
 
@@ -1110,11 +1110,11 @@ export default function App() {
                     {/* couple names */}
                     <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 max-w-full px-2">
                       <span className="script text-[32px] sm:text-[38px] md:text-[48px] font-bold md:font-normal text-sage drop-shadow-sm leading-[1.1]">
-                        Mahela
+                        Tharushi
                       </span>
                       <span className="text-taupe/50 text-sm md:text-xl font-serif">&amp;</span>
                       <span className="script text-[32px] sm:text-[38px] md:text-[48px] font-bold md:font-normal text-sage drop-shadow-sm leading-[1.1]">
-                        Himesha
+                        Kalana
                       </span>
                     </div>
 
@@ -1123,16 +1123,16 @@ export default function App() {
                       <div className="h-px flex-1 bg-sand/45" />
                       <div className="flex flex-col items-center gap-0.5">
                         <span className="serif text-[28px] sm:text-[32px] md:text-4xl text-umber font-bold md:font-medium leading-none">
-                          18
+                          04
                         </span>
                         <span className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-taupe font-bold">
-                          JUNE · THURSDAY
+                          JANUARY · MONDAY
                         </span>
                         <span className="text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-taupe font-bold">
-                          6:00 PM · 2026
+                          6:00 PM · 2027
                         </span>
                         <span className="serif mt-1 block max-w-[220px] px-2 text-[11px] sm:text-[12px] md:text-[13px] uppercase tracking-[0.12em] text-umber/75 text-center leading-snug break-words font-bold md:font-medium">
-                          PABAVEE REGENCY HOTEL, GAMPAHA
+                          EARL'S REGENT HOTEL, KANDY
                         </span>
                       </div>
                       <div className="h-px flex-1 bg-sand/45" />
@@ -1214,9 +1214,9 @@ export default function App() {
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <p className="text-[11px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-black mb-1 md:mb-2">Thursday</p>
+                    <p className="text-[11px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-black mb-1 md:mb-2">Monday</p>
                     <div className="relative inline-block px-6 md:px-8 py-1 md:py-2 border-y border-umber/30">
-                      <p className="serif text-6xl md:text-9xl font-bold text-umber leading-none">18</p>
+                      <p className="serif text-6xl md:text-9xl font-bold text-umber leading-none">04</p>
                       <motion.div
                         animate={{ opacity: [0.4, 1, 0.4] }}
                         transition={{ repeat: Infinity, duration: 2 }}
@@ -1225,12 +1225,12 @@ export default function App() {
                         <Sparkles size={12} className="md:w-4 md:h-4" />
                       </motion.div>
                     </div>
-                    <p className="serif text-lg md:text-3xl font-bold tracking-[0.2em] mt-2 md:mt-3 text-umber">JUNE</p>
+                    <p className="serif text-lg md:text-3xl font-bold tracking-[0.2em] mt-2 md:mt-3 text-umber">JANUARY</p>
                   </div>
 
                   <div className="pt-1">
                     <p className="text-[10px] md:text-sm uppercase tracking-[0.4em] md:tracking-[0.5em] font-black text-umber/70">
-                      Twenty Twenty Six
+                      Twenty Twenty Seven
                     </p>
                   </div>
                 </div>
@@ -1261,7 +1261,7 @@ export default function App() {
                       <h3 className="serif text-4xl md:text-5xl tracking-[0.3em] font-bold text-umber">RSVP</h3>
                     </div>
 
-                    <p className="text-[12px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-bold mt-1">by 04.06.2026</p>
+                    <p className="text-[12px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-bold mt-1">by 25.12.2026</p>
                   </div>
                 </div>
               }
@@ -1285,8 +1285,8 @@ export default function App() {
               front={
                 <div className="w-full h-full relative group">
                   <img
-                    src="https://www.watersedge.lk/wp-content/uploads/2026/01/004A2024-1024x1536.jpg"
-                    alt="Waters Edge Grand Ballroom"
+                    src="https://lh3.googleusercontent.com/p/AF1QipMCWi33oLWbWeROAfP8kUpqwg83FGz9PodQ-lF4=w574-h384-n-k-rw-no-v1"
+                    alt="Earl's Regent Hotel"
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
@@ -1297,9 +1297,9 @@ export default function App() {
                       The Location
                     </p>
                     <h3 className="serif text-2xl md:text-5xl text-sage leading-tight drop-shadow-sm font-medium">
-                      Pabavee Regency
+                      Earl's Regent
                       <br />
-                      Hotel, Gampaha
+                      Hotel, Kandy
                     </h3>
 
                     <motion.button
@@ -1315,18 +1315,18 @@ export default function App() {
 
                   <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-sage flex items-center gap-3 bg-white/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 shadow-lg">
                     <MapPin className="text-sage animate-bounce" size={16} />
-                    <p className="serif text-[10px] md:text-sm tracking-[0.2em] font-bold uppercase">Pabavee Regency Hotel</p>
+                    <p className="serif text-[10px] md:text-sm tracking-[0.2em] font-bold uppercase">Earl's Regent Hotel Kandy</p>
                   </div>
                 </div>
               }
               back={
                 <>
                   <MapPin size={24} className="text-sage mb-4 md:mb-6 opacity-70 md:w-9 md:h-9" />
-                  <h4 className="serif text-2xl md:text-4xl text-sage mb-2 md:mb-4">Pabavee Regency Hotel</h4>
+                  <h4 className="serif text-2xl md:text-4xl text-sage mb-2 md:mb-4">Earl's Regent Hotel Kandy</h4>
                   <p className="text-[10px] md:text-sm text-zinc-500 uppercase tracking-widest leading-loose mb-4 md:mb-6">
-                    No. 150, Mudungoda,
+                    Earl's Regent Hotel,
                     <br />
-                    Gampaha
+                    Kandy
                   </p>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -1353,7 +1353,7 @@ export default function App() {
               front={
                 <div className="w-full h-full relative group overflow-hidden">
                   <img
-                    src="/images/3.jpeg"
+                    src="/time.png"
                     alt="Timeline"
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     referrerPolicy="no-referrer"
@@ -1417,7 +1417,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 px-2 md:px-0">
-            {[1, 2, 4, 5].map((num, idx) => (
+            {[12, 13, 14, 15].map((num, idx) => (
               <motion.div
                 key={num}
                 initial={{ opacity: 0, y: 40 }}
@@ -1428,7 +1428,7 @@ export default function App() {
                   }`}
               >
                 <img
-                  src={`/images/${num}.jpeg`}
+                  src={`/tem/${num}.jpg`}
                   alt={`Moment ${num}`}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   loading="lazy"
@@ -1447,7 +1447,7 @@ export default function App() {
         >
           <div className="flex items-center justify-center gap-6 text-umber/60">
             <div className="h-px w-16 bg-current" />
-            <span className="text-sm uppercase tracking-[0.6em] font-bold">Est. 2026</span>
+            <span className="text-sm uppercase tracking-[0.6em] font-bold">Est. 2027</span>
             <div className="h-px w-16 bg-current" />
           </div>
           <p className="serif italic text-umber/90 text-2xl font-bold max-w-lg mx-auto leading-relaxed px-4">
