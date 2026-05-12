@@ -593,7 +593,7 @@ export default function App() {
             className="fixed inset-0 z-[100] flex items-center justify-center p-6 overflow-hidden"
           >
             <div className="absolute inset-0 z-0 pointer-events-none">
-              <img src="/tem/12.jpg" alt="First Page Background" className="w-full h-full object-cover" fetchpriority="high" decoding="sync" />
+              <img src="/1.webp" alt="First Page Background" className="w-full h-full object-cover" fetchpriority="high" decoding="sync" />
             </div>
 
             <motion.div
