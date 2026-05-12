@@ -636,6 +636,12 @@ export default function App() {
 
   const handleOpen = () => {
     setIsFlapOpen(true);
+    if (audioRef.current) {
+      audioRef.current.muted = false;
+      audioRef.current.play().catch(() => {
+        // Fallback for extremely strict browsers
+      });
+    }
     setTimeout(() => {
       setIsOpened(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -665,7 +671,7 @@ export default function App() {
     <div
       className="min-h-screen bg-paper text-zinc-800 selection:bg-sage/20 overflow-x-hidden relative"
     >
-      <audio ref={audioRef} src="/song.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/Alex warren - Ordinary.mp3" loop preload="auto" autoPlay />
 
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-sage origin-left z-[1000]" style={{ scaleX }} />
 
