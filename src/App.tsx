@@ -283,7 +283,7 @@ type GuestEntry = {
 };
 
 function RSVPForm() {
-  const endpoint = "https://script.google.com/macros/s/AKfycbzNTEBAHz6dwBesgZN1ZMzbbtyo2pefiZEkj1BM770pUwUWlFxAPnusvRxzQB0z2J5xMQ/exec";
+  const endpoint = "https://script.google.com/macros/s/AKfycbyZXY7kwUl1D2Lxol_AxsmdLVe_xABkghZV3RkRm_eqQUOgfzvYXxGEPJSDlx-ctDtB/exec";
 
   const [attendance, setAttendance] = useState<Attendance>("yes");
   const [partyType, setPartyType] = useState<PartyType>("individual");
@@ -386,9 +386,9 @@ function RSVPForm() {
       <CheckCircle2 size={24} className="text-umber mb-2 md:mb-4 mx-auto opacity-80 md:w-8 md:h-8" />
       <h4 className="serif text-3xl md:text-4xl text-umber font-bold mb-2 md:mb-3 text-center">RSVP</h4>
       <p className="text-[12px] md:text-sm text-umber/80 font-bold uppercase tracking-widest mb-4 md:mb-6 text-center leading-relaxed">
-        Please let us know by
+        Please fill before
         <br />
-        25.12.2026
+        28.11.2026
       </p>
 
       <form onSubmit={submit} className="space-y-4 md:space-y-4 px-1 md:px-2">
@@ -504,7 +504,7 @@ function WishesForm() {
   const [wish, setWish] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const endpoint = import.meta.env.VITE_RSVP_ENDPOINT;
+  const endpoint = "https://script.google.com/macros/s/AKfycbyZXY7kwUl1D2Lxol_AxsmdLVe_xABkghZV3RkRm_eqQUOgfzvYXxGEPJSDlx-ctDtB/exec";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -1346,7 +1346,7 @@ export default function App() {
                       <h3 className="serif text-4xl md:text-5xl tracking-[0.3em] font-bold text-umber">RSVP</h3>
                     </div>
 
-                    <p className="text-[12px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-bold mt-1">by 25.12.2026</p>
+                    <p className="text-[12px] md:text-sm uppercase tracking-[0.4em] text-umber/80 font-bold mt-1">fill before 28.11.2026</p>
                   </div>
                 </div>
               }
